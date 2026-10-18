@@ -41,4 +41,4 @@ It writes `src/lib/content/thesis.json` (outline, references, metadata), `src/li
 
 Media and the PDF are served as Workers static assets (`build/`), cached at Cloudflare's edge with the rules in `static/_headers`. Everything is well below the 25 MiB per-file limit, so R2 isn't needed.
 
-To deploy from Git, connect the repository in the Cloudflare dashboard (Workers & Pages → Create → Import a repository) with build command `pnpm build` and deploy command `npx wrangler deploy`.
+The site is served at https://master-thesis.nyggis.com (custom domain set in `wrangler.jsonc`). To deploy from Git, connect the repository in the Cloudflare dashboard (Workers & Pages → Create → Import a repository) with build command `pnpm build` and deploy command `npx wrangler deploy`.
