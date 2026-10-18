@@ -2,7 +2,7 @@
 
 Alexander Nygård. Master of Science thesis, DTU Compute, Technical University of Denmark (DTU), June 2026.
 
-[Read the thesis (PDF)](master-thesis.pdf)
+[Read the thesis (PDF)](static/master-thesis.pdf)
 
 ## Abstract
 
@@ -15,3 +15,30 @@ Shifting from traditional tool calling to programmatic execution (H1→H2) remov
 Raising the abstraction level (H2→H3) largely preserves correctness while further improving operational efficiency. H3’s exact pass rate is 91.07%, only 0.60 percentage points below H2, with no median per-task difference. It reduces mean total tokens by 18.9%, the final context window by 10.3%, per-task model cost by 15.2%, and wall-clock latency is 11.5% lower. One possible reason for H3’s slightly lower success rate is that its domain-tailored interface exposes less exploratory data, which saves tokens but may also limit the agent’s ability and inclination to explore when needed.
 
 The findings support programmatic tool calling as the default for compositional enterprise workflows when code execution is operationally viable. Traditional tool calling remains sufficient for narrow report-based tasks. High-level domain modules are a selective trade-off, justified when stable, recurring workflows warrant the governance and maintenance costs of the abstraction. These conclusions are limited to one frontier model, one seeded Ardoq deployment, and read-only analytical tasks.
+
+## Website
+
+This repository is also a static website for reading the thesis online: SvelteKit (Svelte 5, runes), shadcn-svelte, Tailwind 4 and the [Libron](https://www.npmjs.com/package/@alexandernygard/libron) typeface. It is fully prerendered and served as a static-assets-only Cloudflare Worker.
+
+```sh
+pnpm install
+pnpm dev        # http://localhost:5173
+pnpm build      # static site in build/
+pnpm deploy     # build and `wrangler deploy`
+```
+
+### Content
+
+The text is generated from the LaTeX sources (the `msc-thesis-writer` repository) by `scripts/build-content.mjs`, which needs `pandoc`, `pdftocairo` (poppler) and `cwebp` on the PATH:
+
+```sh
+THESIS_SRC=../../DTU/THESIS/msc-thesis-writer pnpm content
+```
+
+It writes `src/lib/content/thesis.json` (outline, references, metadata), `src/lib/content/body.json` (chapter HTML) and `static/figures/` (PDF figures as SVG, raster figures as WebP). These outputs are committed, so building the site does not need the LaTeX sources. Figure, table, section and citation numbers come from the LaTeX build (`main.aux`, `main.bbl`), so they match the PDF. Rerun the script after rebuilding the PDF.
+
+### Hosting
+
+Media and the PDF are served as Workers static assets (`build/`), cached at Cloudflare's edge with the rules in `static/_headers`. Everything is well below the 25 MiB per-file limit, so R2 isn't needed.
+
+To deploy from Git, connect the repository in the Cloudflare dashboard (Workers & Pages → Create → Import a repository) with build command `pnpm build` and deploy command `npx wrangler deploy`.

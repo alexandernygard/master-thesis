@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "master-thesis",
+	"compatibility_date": "2026-10-18",
+	// Static-assets-only Worker: no server code runs, files are served from Cloudflare's edge.
+	"assets": {
+		"directory": "./build",
+		"not_found_handling": "404-page"
+	},
+	"workers_dev": true,
+	"preview_urls": true
+}

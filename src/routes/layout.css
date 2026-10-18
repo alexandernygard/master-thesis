@@ -1,0 +1,657 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+/* Libron by Nico Verbruggen, SIL Open Font License. */
+@import '@alexandernygard/libron';
+@import 'katex/dist/katex.min.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Paper and ink. One accent (DTU red) marks numbering and the reader's position;
+ * links stay ink-coloured so the text reads calmly.
+ */
+:root {
+	--radius: 0.5rem;
+
+	--background: #fbfaf7;
+	--foreground: #1d1f22;
+	--muted: #f1efea;
+	--muted-foreground: #63656b;
+	--border: #e2dfd8;
+	--input: #e2dfd8;
+	--ring: #9b2335;
+	--primary: #1d1f22;
+	--primary-foreground: #fbfaf7;
+	--secondary: #f1efea;
+	--secondary-foreground: #1d1f22;
+	--accent: #f1efea;
+	--accent-foreground: #1d1f22;
+	--destructive: #b3261e;
+	--card: #ffffff;
+	--card-foreground: #1d1f22;
+	--popover: #ffffff;
+	--popover-foreground: #1d1f22;
+
+	--brand: #9b2335;
+	--brand-soft: color-mix(in oklab, var(--brand) 9%, transparent);
+	--link: #1d1f22;
+	--figure-bg: #ffffff;
+	--code-bg: #f5f3ee;
+}
+
+.dark {
+	--background: #17181a;
+	--foreground: #e8e5df;
+	--muted: #222326;
+	--muted-foreground: #a3a29d;
+	--border: #33343a;
+	--input: #33343a;
+	--ring: #f08b98;
+	--primary: #e8e5df;
+	--primary-foreground: #17181a;
+	--secondary: #222326;
+	--secondary-foreground: #e8e5df;
+	--accent: #26272b;
+	--accent-foreground: #e8e5df;
+	--destructive: #f2a29b;
+	--card: #1d1e21;
+	--card-foreground: #e8e5df;
+	--popover: #1f2023;
+	--popover-foreground: #e8e5df;
+
+	--brand: #ef8a97;
+	--brand-soft: color-mix(in oklab, var(--brand) 12%, transparent);
+	--link: #e8e5df;
+	--figure-bg: #f6f5f2;
+	--code-bg: #1e1f22;
+}
+
+@theme inline {
+	--font-serif: 'Libron', Georgia, 'Times New Roman', serif;
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-brand: var(--brand);
+	--color-brand-soft: var(--brand-soft);
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	html {
+		color-scheme: light;
+		-webkit-text-size-adjust: 100%;
+		scroll-padding-top: 5rem;
+	}
+
+	html.dark {
+		color-scheme: dark;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	body {
+		@apply bg-background font-serif text-foreground;
+		font-size: 1.125rem;
+		line-height: 1.65;
+		font-kerning: normal;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	::selection {
+		background: color-mix(in oklab, var(--brand) 22%, transparent);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+}
+
+/* ------------------------------------------------------------------------- */
+/* Thesis body: the HTML converted from LaTeX                                 */
+/* ------------------------------------------------------------------------- */
+
+@layer components {
+	.thesis {
+		--measure: 42rem;
+		--wide: 54rem;
+		hyphens: auto;
+		-webkit-hyphens: auto;
+	}
+
+	.thesis > *,
+	.thesis section > * {
+		max-width: var(--measure);
+		margin-inline: auto;
+	}
+
+	.thesis section {
+		max-width: none;
+	}
+
+	.thesis p {
+		margin-block: 0 1.05em;
+		text-wrap: pretty;
+	}
+
+	.thesis h2,
+	.thesis h3,
+	.thesis h4,
+	.thesis h5 {
+		font-weight: 700;
+		line-height: 1.25;
+		text-wrap: balance;
+		hyphens: manual;
+		scroll-margin-top: 5rem;
+	}
+
+	.thesis h2 {
+		font-size: 1.6rem;
+		margin-block: 3.25rem 1rem;
+		letter-spacing: -0.005em;
+	}
+
+	.thesis h3 {
+		font-size: 1.25rem;
+		margin-block: 2.25rem 0.75rem;
+	}
+
+	.thesis h4 {
+		font-size: 1.075rem;
+		margin-block: 1.75rem 0.5rem;
+	}
+
+	.thesis h5 {
+		font-size: 1rem;
+		font-style: italic;
+		font-weight: 400;
+		margin-block: 1.25rem 0.25rem;
+	}
+
+	.thesis .heading-number {
+		@apply font-sans;
+		color: var(--brand);
+		font-size: 0.72em;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		margin-right: 0.7em;
+		font-variant-numeric: tabular-nums;
+		vertical-align: 0.08em;
+	}
+
+	.thesis a {
+		color: var(--link);
+		text-decoration-line: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+		transition: text-decoration-color 120ms;
+	}
+
+	.thesis a:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.thesis a.xref,
+	.thesis a.cite {
+		text-decoration: none;
+		color: var(--brand);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.thesis a.xref:hover,
+	.thesis a.cite:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.thesis .cite-group {
+		white-space: nowrap;
+		color: var(--muted-foreground);
+	}
+
+	.thesis ul,
+	.thesis ol {
+		padding-left: 1.4em;
+		margin-block: 0 1.1em;
+	}
+
+	.thesis ul {
+		list-style: disc;
+	}
+
+	.thesis ol {
+		list-style: decimal;
+	}
+
+	.thesis li {
+		margin-block: 0.3em;
+		padding-left: 0.2em;
+	}
+
+	.thesis li > p {
+		margin: 0;
+	}
+
+	.thesis li::marker {
+		color: var(--muted-foreground);
+	}
+
+	.thesis dl {
+		margin-block: 0 1.25em;
+	}
+
+	.thesis dt {
+		font-weight: 700;
+		margin-top: 0.8em;
+	}
+
+	.thesis dd {
+		margin-left: 1.25em;
+	}
+
+	.thesis dd > p {
+		margin: 0;
+	}
+
+	.thesis blockquote {
+		border-left: 2px solid var(--brand);
+		padding-left: 1em;
+		color: var(--muted-foreground);
+		font-style: italic;
+	}
+
+	.thesis code {
+		@apply font-mono;
+		font-size: 0.82em;
+		background: var(--code-bg);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		padding: 0.05em 0.3em;
+		hyphens: none;
+		overflow-wrap: anywhere;
+	}
+
+	.thesis pre {
+		@apply font-mono;
+		font-size: 0.78rem;
+		line-height: 1.6;
+		background: var(--code-bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1rem 1.1rem;
+		overflow: auto;
+		max-height: 32rem;
+		hyphens: none;
+		tab-size: 2;
+	}
+
+	.thesis pre code {
+		font-size: inherit;
+		background: none;
+		border: 0;
+		padding: 0;
+		overflow-wrap: normal;
+		white-space: pre;
+	}
+
+	/* Figures, tables, listings */
+
+	.thesis figure {
+		margin-block: 2.25rem;
+	}
+
+	.thesis figure.figure,
+	.thesis figure.table-figure {
+		max-width: var(--wide);
+	}
+
+	.thesis figure img {
+		display: block;
+		width: var(--fig-width, 100%);
+		max-width: 100%;
+		height: auto;
+		margin-inline: auto;
+		border-radius: calc(var(--radius) - 2px);
+		cursor: zoom-in;
+	}
+
+	/* A light mat behind figures in dark mode; a shadow rather than padding so
+	   the image keeps its exact aspect ratio. */
+	.dark .thesis figure img {
+		background: var(--figure-bg);
+		box-shadow: 0 0 0 0.5rem var(--figure-bg);
+	}
+
+	.dark .thesis figure.figure {
+		padding-inline: 0.5rem;
+	}
+
+	/* Sub-figures share one row at equal image height (as in the PDF), capped so
+	   tall diagrams fit the viewport; they stack on narrow screens. */
+	.thesis figure.has-subfigures {
+		--gap: 1.5rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 1.25rem var(--gap);
+		max-width: min(var(--wide), calc(var(--ar-sum) * 72vh + (var(--panels) - 1) * var(--gap)));
+	}
+
+	/* Its own row: a max-width would let it share the line with the panels. */
+	.thesis figure.has-subfigures > figcaption {
+		flex-basis: 100%;
+		max-width: none;
+		margin-top: 0.25rem;
+		padding-inline: max(0px, (100% - var(--measure)) / 2);
+	}
+
+	.thesis figure.subfigure {
+		flex: var(--ar, 1) 1 0;
+		min-width: 0;
+		margin: 0;
+	}
+
+	.thesis figure.subfigure > figcaption {
+		margin-top: 0.6rem;
+	}
+
+	.thesis figure.subfigure img {
+		width: 100%;
+	}
+
+	.thesis figure.has-subfigures.stacked {
+		max-width: var(--wide);
+	}
+
+	.thesis figure.stacked > figure.subfigure {
+		flex-basis: 100%;
+	}
+
+	@media (max-width: 40rem) {
+		.thesis figure.has-subfigures {
+			max-width: var(--wide);
+		}
+
+		.thesis figure.subfigure {
+			flex-basis: 100%;
+		}
+	}
+
+	.thesis figcaption {
+		@apply font-sans;
+		font-size: 0.84rem;
+		line-height: 1.55;
+		color: var(--muted-foreground);
+		margin-top: 0.85rem;
+		max-width: var(--measure);
+		margin-inline: auto;
+		hyphens: manual;
+		text-wrap: pretty;
+	}
+
+	.thesis figure.table-figure > figcaption,
+	.thesis figure.listing > figcaption {
+		margin-top: 0;
+		margin-bottom: 0.75rem;
+	}
+
+	.thesis .caption-label {
+		font-weight: 650;
+		color: var(--foreground);
+		margin-right: 0.35em;
+	}
+
+	.thesis .table-scroll {
+		overflow-x: auto;
+		border-block: 1.5px solid var(--foreground);
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.thesis table {
+		@apply font-sans;
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.8rem;
+		line-height: 1.45;
+		font-variant-numeric: tabular-nums;
+		hyphens: manual;
+	}
+
+	.thesis thead th {
+		font-weight: 650;
+		border-bottom: 1px solid var(--foreground);
+		vertical-align: bottom;
+	}
+
+	.thesis th,
+	.thesis td {
+		padding: 0.45rem 0.7rem;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.thesis [data-align='right'] {
+		text-align: right;
+	}
+
+	.thesis [data-align='center'] {
+		text-align: center;
+	}
+
+	.thesis tbody tr + tr td {
+		border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+	}
+
+	.thesis tbody tr:hover td {
+		background: color-mix(in oklab, var(--muted) 60%, transparent);
+	}
+
+	.thesis td p,
+	.thesis th p {
+		margin: 0;
+	}
+
+	.thesis td code {
+		font-size: 0.92em;
+	}
+
+	/* The trace figure: three side-by-side columns of steps */
+	.thesis figure.text-figure {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: 1rem;
+		max-width: var(--wide);
+	}
+
+	.thesis figure.text-figure > figcaption {
+		grid-column: 1 / -1;
+	}
+
+	.thesis .trace-column {
+		@apply font-sans;
+		font-size: 0.78rem;
+		line-height: 1.5;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 0.9rem 1rem;
+	}
+
+	.thesis .trace-column p {
+		margin: 0 0 0.25rem;
+	}
+
+	.thesis .trace-column ol {
+		margin: 0.5rem 0 0;
+		padding-left: 1.6em;
+	}
+
+	.thesis .trace-column li {
+		margin-block: 0.5em;
+	}
+
+	.thesis .trace-column code {
+		font-size: 0.95em;
+		background: none;
+		border: 0;
+		padding: 0;
+		color: var(--foreground);
+	}
+
+	/* Footnotes */
+	.thesis .footnote-ref {
+		font-size: 0.7em;
+		vertical-align: super;
+		line-height: 0;
+	}
+
+	.thesis section.footnotes {
+		@apply font-sans;
+		font-size: 0.85rem;
+		color: var(--muted-foreground);
+		border-top: 1px solid var(--border);
+		margin-top: 3rem;
+		padding-top: 1rem;
+	}
+
+	.thesis section.footnotes hr {
+		display: none;
+	}
+
+	/* Logos in the acknowledgements */
+	.thesis .center {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2.5rem;
+		align-items: center;
+		justify-content: center;
+		margin-block: 2.5rem 0;
+	}
+
+	.thesis .center img {
+		height: 2.75rem;
+		width: auto;
+		cursor: default;
+	}
+
+	.dark .thesis .center img {
+		background: var(--figure-bg);
+		padding: 0.4rem 0.6rem;
+		border-radius: 6px;
+	}
+
+	.thesis .katex {
+		font-size: 1.05em;
+	}
+
+	/* Arriving at a link target */
+	.thesis :target,
+	.flash {
+		animation: target-flash 1.6s ease-out;
+	}
+}
+
+@keyframes target-flash {
+	0%,
+	30% {
+		background-color: color-mix(in oklab, var(--brand) 14%, transparent);
+		box-shadow: 0 0 0 0.4rem color-mix(in oklab, var(--brand) 14%, transparent);
+	}
+	100% {
+		background-color: transparent;
+		box-shadow: 0 0 0 0.4rem transparent;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media print {
+	aside,
+	header.mobile-bar,
+	.no-print {
+		display: none !important;
+	}
+}
+
+@layer components {
+	.thesis.references {
+		list-style: none;
+		padding: 0;
+		hyphens: manual;
+	}
+
+	.thesis.references li {
+		margin: 0;
+		padding-left: 0;
+	}
+
+	.reference .ref-title {
+		color: var(--foreground);
+	}
+
+	.reference .ref-link {
+		color: var(--muted-foreground);
+		word-break: break-all;
+		text-decoration: underline;
+		text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+		text-underline-offset: 0.18em;
+	}
+
+	.reference .ref-link:hover {
+		color: var(--foreground);
+	}
+
+	.reference em,
+	.reference cite {
+		font-style: italic;
+	}
+}
+
+@layer components {
+	.thesis .num {
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+	}
+}

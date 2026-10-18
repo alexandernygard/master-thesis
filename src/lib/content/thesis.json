@@ -1,0 +1,1564 @@
+{
+	"meta": {
+		"title": "Agent-System Interface Designs for Enterprise Platforms",
+		"subtitle": "A Comparative Empirical Study",
+		"author": "Alexander Nygård",
+		"degree": "MSc thesis",
+		"institution": "Technical University of Denmark",
+		"department": "DTU Compute",
+		"date": "June 2026",
+		"supervisors": [
+			"Alberto Lafuente",
+			"Alex Jung"
+		],
+		"companySupervisor": "Falco Winkler",
+		"keywords": [
+			"LLM agents",
+			"agent harnesses",
+			"Enterprise Architecture",
+			"Ardoq",
+			"tool calling",
+			"code execution",
+			"programmatic tool use",
+			"enterprise AI"
+		],
+		"logos": [
+			{
+				"name": "DTU",
+				"src": "/logos/dtu.svg",
+				"width": 469,
+				"height": 684
+			},
+			{
+				"name": "Co-funded by the European Union",
+				"src": "/logos/eu.svg",
+				"width": 720,
+				"height": 156
+			},
+			{
+				"name": "Ardoq",
+				"src": "/logos/ardoq.webp",
+				"width": 368,
+				"height": 356
+			}
+		],
+		"pdf": {
+			"src": "/master-thesis.pdf",
+			"bytes": 7615561,
+			"pageOffset": 10
+		}
+	},
+	"front": [
+		{
+			"id": "abstract",
+			"title": "Abstract"
+		},
+		{
+			"id": "acknowledgements",
+			"title": "Acknowledgements"
+		},
+		{
+			"id": "ai-declaration",
+			"title": "Declaration on the Use of Generative AI"
+		}
+	],
+	"chapters": [
+		{
+			"id": "chap:introduction",
+			"kind": "chapter",
+			"number": "1",
+			"title": "Introduction",
+			"page": 1,
+			"sections": [
+				{
+					"id": "motivation",
+					"number": "1.1",
+					"title": "Motivation",
+					"page": 1,
+					"children": []
+				},
+				{
+					"id": "sec:research-questions",
+					"number": "1.2",
+					"title": "Research Questions",
+					"page": 2,
+					"children": []
+				},
+				{
+					"id": "sec:scope",
+					"number": "1.3",
+					"title": "Scope and Contributions",
+					"page": 3,
+					"children": []
+				},
+				{
+					"id": "paper-structure",
+					"number": "1.4",
+					"title": "Paper Structure",
+					"page": 4,
+					"children": []
+				}
+			]
+		},
+		{
+			"id": "chap:background",
+			"kind": "chapter",
+			"number": "2",
+			"title": "Background",
+			"page": 5,
+			"sections": [
+				{
+					"id": "sec:how-llms-act",
+					"number": "2.1",
+					"title": "Language Models and Tool Use",
+					"page": 5,
+					"children": []
+				},
+				{
+					"id": "sec:llms-to-agents",
+					"number": "2.2",
+					"title": "From Language Models to Agents",
+					"page": 6,
+					"children": [
+						{
+							"id": "sec:agent-state-locations",
+							"number": "2.2.1",
+							"title": "Locations of Agent State"
+						}
+					]
+				},
+				{
+					"id": "sec:ardoq-domain",
+					"number": "2.3",
+					"title": "Ardoq and the Enterprise Architecture Domain",
+					"page": 7,
+					"children": [
+						{
+							"id": "enterprise-architecture-and-ardoqs-users",
+							"number": "2.3.1",
+							"title": "Enterprise Architecture and Ardoq’s Users"
+						},
+						{
+							"id": "the-ardoq-data-model",
+							"number": "2.3.2",
+							"title": "The Ardoq Data Model"
+						},
+						{
+							"id": "sec:agents-in-ardoq",
+							"number": "2.3.3",
+							"title": "Agents in Ardoq"
+						}
+					]
+				},
+				{
+					"id": "sec:compositional-demands",
+					"number": "2.4",
+					"title": "Compositional Demands of Enterprise Analysis",
+					"page": 13,
+					"children": []
+				},
+				{
+					"id": "sec:data-scale-problem",
+					"number": "2.5",
+					"title": "Interaction Scale and Code-Execution Agents",
+					"page": 13,
+					"children": []
+				},
+				{
+					"id": "sec:harness-architectures",
+					"number": "2.6",
+					"title": "Three Agent Harness Architectures",
+					"page": 14,
+					"children": []
+				}
+			]
+		},
+		{
+			"id": "chap:related-work",
+			"kind": "chapter",
+			"number": "3",
+			"title": "Related Work",
+			"page": 19,
+			"sections": [
+				{
+					"id": "llm-agents-and-tool-use",
+					"number": "3.1",
+					"title": "LLM Agents and Tool Use",
+					"page": 19,
+					"children": []
+				},
+				{
+					"id": "code-generation-for-system-interaction",
+					"number": "3.2",
+					"title": "Code Generation for System Interaction",
+					"page": 20,
+					"children": []
+				},
+				{
+					"id": "agent-architectures-state-and-domain-abstraction",
+					"number": "3.3",
+					"title": "Agent Architectures, State, and Domain Abstraction",
+					"page": 21,
+					"children": []
+				},
+				{
+					"id": "enterprise-ai-and-ea-automation",
+					"number": "3.4",
+					"title": "Enterprise AI and EA Automation",
+					"page": 22,
+					"children": []
+				},
+				{
+					"id": "sec:benchmark-design",
+					"number": "3.5",
+					"title": "Benchmark Design for Agent Evaluation",
+					"page": 23,
+					"children": []
+				},
+				{
+					"id": "sec:summary-gap",
+					"number": "3.6",
+					"title": "Summary and Gap",
+					"page": 24,
+					"children": []
+				}
+			]
+		},
+		{
+			"id": "chap:methodology",
+			"kind": "chapter",
+			"number": "4",
+			"title": "Methodology",
+			"page": 25,
+			"sections": [
+				{
+					"id": "research-design-and-comparisons",
+					"number": "4.1",
+					"title": "Research Design and Comparisons",
+					"page": 25,
+					"children": []
+				},
+				{
+					"id": "sec:benchmark-suite",
+					"number": "4.2",
+					"title": "The Ardoq Benchmark Suite",
+					"page": 27,
+					"children": [
+						{
+							"id": "task-construction",
+							"number": "4.2.1",
+							"title": "Task Construction"
+						},
+						{
+							"id": "sec:task-categories",
+							"number": "4.2.2",
+							"title": "Task Taxonomy"
+						},
+						{
+							"id": "sec:survey",
+							"number": "4.2.3",
+							"title": "Task-suite Validation Survey"
+						},
+						{
+							"id": "oracle-based-verification",
+							"number": "4.2.4",
+							"title": "Oracle-Based Verification"
+						}
+					]
+				},
+				{
+					"id": "sec:arch-impl",
+					"number": "4.3",
+					"title": "Architecture Configurations",
+					"page": 31,
+					"children": [
+						{
+							"id": "traditional-tool-calling-harness-configuration",
+							"number": "4.3.1",
+							"title": "Traditional Tool-Calling Harness Configuration"
+						},
+						{
+							"id": "programmatic-harness-configuration",
+							"number": "4.3.2",
+							"title": "Programmatic Harness Configuration"
+						},
+						{
+							"id": "domain-module-harness-configuration",
+							"number": "4.3.3",
+							"title": "Domain-Module Harness Configuration"
+						},
+						{
+							"id": "sec:prompt-protocol",
+							"number": "4.3.4",
+							"title": "Prompt and Documentation Protocol"
+						}
+					]
+				},
+				{
+					"id": "sec:harness-variants",
+					"number": "4.4",
+					"title": "Harness-Configuration Design-Validation Studies",
+					"page": 33,
+					"children": [
+						{
+							"id": "h1-how-should-tool-results-be-returned",
+							"number": "4.4.1",
+							"title": "H1: How Should Tool Results Be Returned?"
+						},
+						{
+							"id": "h2-how-should-the-code-environment-expose-the-api",
+							"number": "4.4.2",
+							"title": "H2: How Should the Code Environment Expose the API?"
+						}
+					]
+				},
+				{
+					"id": "experimental-procedure",
+					"number": "4.5",
+					"title": "Experimental Procedure",
+					"page": 34,
+					"children": []
+				},
+				{
+					"id": "sec:evaluation-metrics",
+					"number": "4.6",
+					"title": "Evaluation Metrics",
+					"page": 35,
+					"children": []
+				},
+				{
+					"id": "sec:analysis-plan",
+					"number": "4.7",
+					"title": "Analysis Plan",
+					"page": 35,
+					"children": []
+				},
+				{
+					"id": "sec:validity",
+					"number": "4.8",
+					"title": "Validity and Limitations",
+					"page": 36,
+					"children": [
+						{
+							"id": "internal-validity",
+							"number": "4.8.1",
+							"title": "Internal Validity"
+						},
+						{
+							"id": "construct-validity",
+							"number": "4.8.2",
+							"title": "Construct Validity"
+						},
+						{
+							"id": "statistical-conclusion-validity",
+							"number": "4.8.3",
+							"title": "Statistical Conclusion Validity"
+						},
+						{
+							"id": "external-validity-and-scope",
+							"number": "4.8.4",
+							"title": "External Validity and Scope"
+						},
+						{
+							"id": "measurement-and-oracle-validity",
+							"number": "4.8.5",
+							"title": "Measurement and Oracle Validity"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "chap:implementation",
+			"kind": "chapter",
+			"number": "5",
+			"title": "Implementation",
+			"page": 39,
+			"sections": [
+				{
+					"id": "implementation-goals-and-architecture",
+					"number": "5.1",
+					"title": "Implementation goals and architecture",
+					"page": 39,
+					"children": []
+				},
+				{
+					"id": "common-experimental-foundation",
+					"number": "5.2",
+					"title": "Common experimental foundation",
+					"page": 40,
+					"children": [
+						{
+							"id": "agent-and-answer-contract",
+							"number": "5.2.1",
+							"title": "Agent and answer contract"
+						},
+						{
+							"id": "shared-low-level-operations-and-their-production-origin",
+							"number": "5.2.2",
+							"title": "Shared low-level operations and their production origin"
+						},
+						{
+							"id": "evaluation-cases-runs-and-persistence",
+							"number": "5.2.3",
+							"title": "Evaluation cases, runs, and persistence"
+						}
+					]
+				},
+				{
+					"id": "sec:interface-construction",
+					"number": "5.3",
+					"title": "From implementation artifacts to model-visible interfaces",
+					"page": 41,
+					"children": []
+				},
+				{
+					"id": "h1-traditional-tool-calling-harness",
+					"number": "5.4",
+					"title": "H1: Traditional tool-calling harness",
+					"page": 43,
+					"children": [
+						{
+							"id": "runtime-path-and-state-placement",
+							"number": "5.4.1",
+							"title": "Runtime path and state placement"
+						},
+						{
+							"id": "sec:h1-serialisation-variants",
+							"number": "5.4.2",
+							"title": "Observation serialisation variants"
+						}
+					]
+				},
+				{
+					"id": "sec:sandbox-implementation",
+					"number": "5.5",
+					"title": "Shared Python execution service",
+					"page": 44,
+					"children": [
+						{
+							"id": "session-namespaces-and-concurrency",
+							"number": "5.5.1",
+							"title": "Session namespaces and concurrency"
+						},
+						{
+							"id": "observations-errors-and-limits",
+							"number": "5.5.2",
+							"title": "Observations, errors, and limits"
+						}
+					]
+				},
+				{
+					"id": "h2-programmatic-harness",
+					"number": "5.6",
+					"title": "H2: Programmatic harness",
+					"page": 46,
+					"children": [
+						{
+							"id": "wrapped-function-namespace",
+							"number": "5.6.1",
+							"title": "Wrapped-function namespace"
+						},
+						{
+							"id": "sec:h2-doc-variants",
+							"number": "5.6.2",
+							"title": "Documentation and value variants"
+						}
+					]
+				},
+				{
+					"id": "h3-agent-native-domain-module-harness",
+					"number": "5.7",
+					"title": "H3: Agent-native domain module harness",
+					"page": 47,
+					"children": [
+						{
+							"id": "design-rationale-and-programming-model",
+							"number": "5.7.1",
+							"title": "Design rationale and programming model"
+						},
+						{
+							"id": "public-namespace-and-model-facing-guidance",
+							"number": "5.7.2",
+							"title": "Public namespace and model-facing guidance"
+						},
+						{
+							"id": "moving-work-into-the-sdk",
+							"number": "5.7.3",
+							"title": "Moving work into the SDK"
+						},
+						{
+							"id": "guard-rails-and-diagnostic-feedback",
+							"number": "5.7.4",
+							"title": "Guard rails and diagnostic feedback"
+						}
+					]
+				},
+				{
+					"id": "example-workflow-across-the-three-harnesses",
+					"number": "5.8",
+					"title": "Example workflow across the three harnesses",
+					"page": 51,
+					"children": []
+				},
+				{
+					"id": "telemetry-validation-and-measurement-boundaries",
+					"number": "5.9",
+					"title": "Telemetry, validation, and measurement boundaries",
+					"page": 51,
+					"children": []
+				}
+			]
+		},
+		{
+			"id": "chap:evaluation",
+			"kind": "chapter",
+			"number": "6",
+			"title": "Evaluation",
+			"page": 53,
+			"sections": [
+				{
+					"id": "sec:evaluation-overview",
+					"number": "6.1",
+					"title": "Overview",
+					"page": 53,
+					"children": [
+						{
+							"id": "sec:task-suite-validation",
+							"number": "6.1.1",
+							"title": "Task-suite Validation"
+						}
+					]
+				},
+				{
+					"id": "sec:design-validation",
+					"number": "6.2",
+					"title": "Harness-Configuration Design-Validation Results",
+					"page": 54,
+					"children": []
+				},
+				{
+					"id": "sec:headline-harness-comparison",
+					"number": "6.3",
+					"title": "Main Harness Comparison",
+					"page": 54,
+					"children": []
+				},
+				{
+					"id": "sec:task-level-sensitivity",
+					"number": "6.4",
+					"title": "Where the Differences Occur",
+					"page": 56,
+					"children": [
+						{
+							"id": "sensitivity-of-the-h2h3-transition",
+							"number": "6.4.1",
+							"title": "Sensitivity of the H2–H3 Transition"
+						},
+						{
+							"id": "task-characteristics",
+							"number": "6.4.2",
+							"title": "Task Characteristics"
+						}
+					]
+				},
+				{
+					"id": "sec:resource-efficiency",
+					"number": "6.5",
+					"title": "Operational Behaviour",
+					"page": 61,
+					"children": [
+						{
+							"id": "token-usage-and-the-context-window",
+							"number": "6.5.1",
+							"title": "Token Usage and the Context Window"
+						},
+						{
+							"id": "latency",
+							"number": "6.5.2",
+							"title": "Latency"
+						}
+					]
+				},
+				{
+					"id": "sec:failure-behaviour",
+					"number": "6.6",
+					"title": "Failure Behaviour",
+					"page": 64,
+					"children": [
+						{
+							"id": "subsec:t12-boundary",
+							"number": "6.6.1",
+							"title": "The T12 Boundary Case"
+						}
+					]
+				},
+				{
+					"id": "sec:discussion",
+					"number": "6.7",
+					"title": "Discussion",
+					"page": 67,
+					"children": [
+						{
+							"id": "sq1-stateful-composition-and-execution-responsibility",
+							"number": "6.7.1",
+							"title": "SQ1: Stateful Composition and Execution Responsibility"
+						},
+						{
+							"id": "sq2-semantic-abstraction-and-governance-responsibility",
+							"number": "6.7.2",
+							"title": "SQ2: Semantic Abstraction and Governance Responsibility"
+						},
+						{
+							"id": "sq3-task-sensitivity",
+							"number": "6.7.3",
+							"title": "SQ3: Task Sensitivity"
+						},
+						{
+							"id": "sec:practical-framework",
+							"number": "6.7.4",
+							"title": "Practical Implications"
+						},
+						{
+							"id": "sec:limitations",
+							"number": "6.7.5",
+							"title": "Threats to Validity and Generalisability"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "chap:conclusion",
+			"kind": "chapter",
+			"number": "7",
+			"title": "Conclusion",
+			"page": 73,
+			"sections": [
+				{
+					"id": "sec:answers",
+					"number": "7.1",
+					"title": "Answer to the Research Question",
+					"page": 73,
+					"children": []
+				},
+				{
+					"id": "sec:contributions",
+					"number": "7.2",
+					"title": "Contributions",
+					"page": 74,
+					"children": []
+				},
+				{
+					"id": "practical-implications",
+					"number": "7.3",
+					"title": "Practical Implications",
+					"page": 74,
+					"children": []
+				},
+				{
+					"id": "scope-of-the-conclusions",
+					"number": "7.4",
+					"title": "Scope of the Conclusions",
+					"page": 75,
+					"children": []
+				},
+				{
+					"id": "future-work",
+					"number": "7.5",
+					"title": "Future Work",
+					"page": 75,
+					"children": []
+				},
+				{
+					"id": "closing-perspective",
+					"number": "7.6",
+					"title": "Closing Perspective",
+					"page": 76,
+					"children": []
+				}
+			]
+		},
+		{
+			"id": "appendix",
+			"kind": "appendix",
+			"number": "A",
+			"title": "Appendix",
+			"page": 83,
+			"sections": [
+				{
+					"id": "ardoq-definitions",
+					"number": "A.1",
+					"title": "Ardoq Definitions",
+					"page": 83,
+					"children": []
+				},
+				{
+					"id": "app:full-statistical-diagnostics",
+					"number": "A.2",
+					"title": "Full Statistical Diagnostics",
+					"page": 83,
+					"children": []
+				},
+				{
+					"id": "app:benchmark-task-catalogue",
+					"number": "A.3",
+					"title": "Benchmark Task Catalogue",
+					"page": 85,
+					"children": [
+						{
+							"id": "t01-high-exposure-risks-without-mitigating-controls",
+							"number": "A.3.1",
+							"title": "T01: High-Exposure Risks Without Mitigating Controls"
+						},
+						{
+							"id": "t02-servers-supporting-retiring-applications",
+							"number": "A.3.2",
+							"title": "T02: Servers Supporting Retiring Applications"
+						},
+						{
+							"id": "t03-process-activities-missing-role-assignments",
+							"number": "A.3.3",
+							"title": "T03: Process Activities Missing Role Assignments"
+						},
+						{
+							"id": "t04-unrealised-capabilities-and-owning-organisational-units",
+							"number": "A.3.4",
+							"title": "T04: Unrealised Capabilities and Owning Organisational Units"
+						},
+						{
+							"id": "t05-value-stream-stage-capabilities-with-maturity",
+							"number": "A.3.5",
+							"title": "T05: Value-Stream Stage Capabilities With Maturity"
+						},
+						{
+							"id": "t06-most-expensive-physical-servers",
+							"number": "A.3.6",
+							"title": "T06: Most Expensive Physical Servers"
+						},
+						{
+							"id": "t07-classified-data-stores-and-accessing-applications",
+							"number": "A.3.7",
+							"title": "T07: Classified Data Stores and Accessing Applications"
+						},
+						{
+							"id": "t08-application-cost-and-integrations-by-service-level",
+							"number": "A.3.8",
+							"title": "T08: Application Cost and Integrations by Service Level"
+						},
+						{
+							"id": "t09-candidate-vulnerabilities-by-product-review-date",
+							"number": "A.3.9",
+							"title": "T09: Candidate Vulnerabilities by Product Review Date"
+						},
+						{
+							"id": "t10-organisational-headcount-overview",
+							"number": "A.3.10",
+							"title": "T10: Organisational Headcount Overview"
+						},
+						{
+							"id": "t11-critical-capabilities-without-ai-support",
+							"number": "A.3.11",
+							"title": "T11: Critical Capabilities Without AI Support"
+						},
+						{
+							"id": "t12-applications-integrating-with-sap-supplied-systems",
+							"number": "A.3.12",
+							"title": "T12: Applications Integrating With SAP-Supplied Systems"
+						},
+						{
+							"id": "t13-deliberately-delayed-debt-items",
+							"number": "A.3.13",
+							"title": "T13: Deliberately Delayed Debt Items"
+						},
+						{
+							"id": "t14-mandated-products-and-deployment-compliance",
+							"number": "A.3.14",
+							"title": "T14: Mandated Products and Deployment Compliance"
+						},
+						{
+							"id": "t15-metamodel-path-from-application-to-risk",
+							"number": "A.3.15",
+							"title": "T15: Metamodel Path From Application to Risk"
+						},
+						{
+							"id": "t16-approved-versus-standardised-technology-products",
+							"number": "A.3.16",
+							"title": "T16: Approved Versus Standardised Technology Products"
+						},
+						{
+							"id": "t17-doubly-exposed-at-risk-applications",
+							"number": "A.3.17",
+							"title": "T17: Doubly Exposed At-Risk Applications"
+						},
+						{
+							"id": "t18-ai-systems-without-an-owner",
+							"number": "A.3.18",
+							"title": "T18: AI Systems Without an Owner"
+						},
+						{
+							"id": "t19-unmapped-eu-dora-requirements",
+							"number": "A.3.19",
+							"title": "T19: Unmapped EU DORA Requirements"
+						},
+						{
+							"id": "t20-applications-owned-by-a-persons-units",
+							"number": "A.3.20",
+							"title": "T20: Applications Owned by a Person’s Units"
+						},
+						{
+							"id": "t21-data-quality-dashboard-section-profiles",
+							"number": "A.3.21",
+							"title": "T21: Data-Quality Dashboard Section Profiles"
+						},
+						{
+							"id": "t22-most-referenced-component-type",
+							"number": "A.3.22",
+							"title": "T22: Most Referenced Component Type"
+						},
+						{
+							"id": "t23-adobe-retirement-impact",
+							"number": "A.3.23",
+							"title": "T23: Adobe Retirement Impact"
+						},
+						{
+							"id": "t24-differentiating-versus-commodity-capability-maturity",
+							"number": "A.3.24",
+							"title": "T24: Differentiating Versus Commodity Capability Maturity"
+						},
+						{
+							"id": "reasoning-patterns",
+							"number": "A.3.25",
+							"title": "Reasoning Patterns"
+						}
+					]
+				},
+				{
+					"id": "supplementary-evaluation-tables",
+					"number": "A.4",
+					"title": "Supplementary Evaluation Tables",
+					"page": 95,
+					"children": []
+				},
+				{
+					"id": "app:harness-prompts",
+					"number": "A.5",
+					"title": "Harness System Prompts",
+					"page": 96,
+					"children": []
+				},
+				{
+					"id": "app:h3-sdk-examples",
+					"number": "A.6",
+					"title": "H3 Tool-Description Patterns and SDK Examples",
+					"page": 98,
+					"children": []
+				},
+				{
+					"id": "app:post-run-reflection-prompt",
+					"number": "A.7",
+					"title": "Post-Run Reflection Schema and Prompt",
+					"page": 100,
+					"children": []
+				},
+				{
+					"id": "app:example-task-output-trace",
+					"number": "A.8",
+					"title": "Representative Trial Trace",
+					"page": 102,
+					"children": [
+						{
+							"id": "t13-delayed-technical-debt-and-consuming-organizational-units",
+							"number": "A.8.1",
+							"title": "T13: Delayed Technical Debt and Consuming Organizational Units"
+						}
+					]
+				},
+				{
+					"id": "app:survey-instrument",
+					"number": "A.9",
+					"title": "Task-suite Validation Survey Instrument",
+					"page": 105,
+					"children": []
+				}
+			]
+		}
+	],
+	"references": [
+		{
+			"key": "mckinsey_state_ai_2023",
+			"n": 1,
+			"html": "<span class=\"ref-authors\">A. Singla, A. Sukharevsky, L. Yee, M. Chui, and B. Hall</span>. <cite class=\"ref-title\">The state of AI in 2023: Generative AI’s breakout year</cite>. <em>McKinsey &amp; Company</em>, 2023. <a class=\"ref-link\" href=\"https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023-generative-ais-breakout-year\" target=\"_blank\" rel=\"noreferrer\">www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023-generative-ais-breakout-year</a>",
+			"short": "Singla et al.",
+			"year": "2023",
+			"title": "The state of AI in 2023: Generative AI’s breakout year",
+			"url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023-generative-ais-breakout-year"
+		},
+		{
+			"key": "mckinsey_state_ai_2024",
+			"n": 2,
+			"html": "<span class=\"ref-authors\">A. Singla, A. Sukharevsky, L. Yee, M. Chui, and B. Hall</span>. <cite class=\"ref-title\">The state of AI in early 2024: Gen AI adoption spikes and starts to generate value</cite>. <em>McKinsey &amp; Company</em>, 2024. <a class=\"ref-link\" href=\"https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024\" target=\"_blank\" rel=\"noreferrer\">www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024</a>",
+			"short": "Singla et al.",
+			"year": "2024",
+			"title": "The state of AI in early 2024: Gen AI adoption spikes and starts to generate value",
+			"url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024"
+		},
+		{
+			"key": "microsoft_worktrend_2024",
+			"n": 3,
+			"html": "<cite class=\"ref-title\">2024 work trend index annual report: AI at work is here. Now comes the hard part</cite>. <em>Microsoft; LinkedIn</em>, 2024. <a class=\"ref-link\" href=\"https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part\" target=\"_blank\" rel=\"noreferrer\">www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part</a>",
+			"short": "2024 work trend index annual report: AI at work is here. Now comes the hard part",
+			"year": "2024",
+			"title": "2024 work trend index annual report: AI at work is here. Now comes the hard part",
+			"url": "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part"
+		},
+		{
+			"key": "mckinsey_genai_potential_2023",
+			"n": 4,
+			"html": "<cite class=\"ref-title\">The economic potential of generative AI: The next productivity frontier</cite>. <em>McKinsey Global Institute</em>, 2023. <a class=\"ref-link\" href=\"https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier\" target=\"_blank\" rel=\"noreferrer\">www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier</a>",
+			"short": "The economic potential of generative AI: The next productivity frontier",
+			"year": "2023",
+			"title": "The economic potential of generative AI: The next productivity frontier",
+			"url": "https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier"
+		},
+		{
+			"key": "wef_ai_action_2025",
+			"n": 5,
+			"html": "<cite class=\"ref-title\">AI in action: Beyond experimentation to transform industry</cite>. <em>World Economic Forum</em>, 2025. <a class=\"ref-link\" href=\"https://reports.weforum.org/docs/WEF_AI_in_Action_Beyond_Experimentation_to_Transform_Industry_2025.pdf\" target=\"_blank\" rel=\"noreferrer\">reports.weforum.org/docs/WEF_AI_in_Action_Beyond_Experimentation_to_Transform_Industry_2025.pdf</a>",
+			"short": "AI in action: Beyond experimentation to transform industry",
+			"year": "2025",
+			"title": "AI in action: Beyond experimentation to transform industry",
+			"url": "https://reports.weforum.org/docs/WEF_AI_in_Action_Beyond_Experimentation_to_Transform_Industry_2025.pdf"
+		},
+		{
+			"key": "oecd_genai_productivity_2025",
+			"n": 6,
+			"html": "<span class=\"ref-authors\">F. Calvino, J. Reijerink, and L. Samek</span>. <cite class=\"ref-title\">The effects of generative AI on productivity, innovation and entrepreneurship</cite>. <em>OECD</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.1787/b21df222-en\" target=\"_blank\" rel=\"noreferrer\">doi:10.1787/b21df222-en</a>",
+			"short": "Calvino, Reijerink, and Samek",
+			"year": "2025",
+			"title": "The effects of generative AI on productivity, innovation and entrepreneurship",
+			"url": "https://doi.org/10.1787/b21df222-en"
+		},
+		{
+			"key": "sigdel2026schema",
+			"n": 7,
+			"html": "<span class=\"ref-authors\">A. Sigdel and R. Baral</span>. <span class=\"ref-title\">Schema First Tool APIs for LLM Agents: A Controlled Study of Tool Misuse, Recovery, and Budgeted Performance</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2603.13404\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2603.13404</a>",
+			"short": "Sigdel and Baral",
+			"year": "2026",
+			"title": "Schema First Tool APIs for LLM Agents: A Controlled Study of Tool Misuse, Recovery, and Budgeted Performance",
+			"url": "https://doi.org/10.48550/arxiv.2603.13404"
+		},
+		{
+			"key": "wu2025art",
+			"n": 8,
+			"html": "<span class=\"ref-authors\">Y. Wu, P. Chen, D. Baranwal, J. Zhou, and J. Yuan</span>. <span class=\"ref-title\">The Art of Tool Interface Design</span>. <em>ArXiv.org</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2503.21036\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2503.21036</a>",
+			"short": "Wu et al.",
+			"year": "2025",
+			"title": "The Art of Tool Interface Design",
+			"url": "https://doi.org/10.48550/arxiv.2503.21036"
+		},
+		{
+			"key": "xu2026evolution",
+			"n": 9,
+			"html": "<span class=\"ref-authors\">H. Xu, C. Li, X. Ma, X. Ou, Z. Zhang, T. He, X. Liu, Z. Wang, J. Liang, Z. Chu, R. Liu, R. Mu, M. Liu, M. Liu, and B. Qin</span>. <span class=\"ref-title\">The Evolution of Tool Use in LLM Agents: From Single-Tool Call to Multi-Tool Orchestration</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2603.22862\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2603.22862</a>",
+			"short": "Xu et al.",
+			"year": "2026",
+			"title": "The Evolution of Tool Use in LLM Agents: From Single-Tool Call to Multi-Tool Orchestration",
+			"url": "https://doi.org/10.48550/arxiv.2603.22862"
+		},
+		{
+			"key": "mit_genai_environment_2025",
+			"n": 10,
+			"html": "<span class=\"ref-authors\">MIT News Office</span>. <span class=\"ref-title\">Explained: Generative AI’s environmental impact</span>. <em>MIT News</em>, 2025. <a class=\"ref-link\" href=\"https://news.mit.edu/2025/explained-generative-ai-environmental-impact-0117\" target=\"_blank\" rel=\"noreferrer\">news.mit.edu/2025/explained-generative-ai-environmental-impact-0117</a>",
+			"short": "MIT News Office",
+			"year": "2025",
+			"title": "Explained: Generative AI’s environmental impact",
+			"url": "https://news.mit.edu/2025/explained-generative-ai-environmental-impact-0117"
+		},
+		{
+			"key": "anthropic_code_execution_mcp_2025",
+			"n": 11,
+			"html": "<span class=\"ref-authors\">Anthropic</span>. <span class=\"ref-title\">Code execution with MCP: Building more efficient AI agents</span>. <em>Anthropic Engineering Blog</em>, 2025. <a class=\"ref-link\" href=\"https://www.anthropic.com/engineering/code-execution-with-mcp\" target=\"_blank\" rel=\"noreferrer\">www.anthropic.com/engineering/code-execution-with-mcp</a>",
+			"short": "Anthropic",
+			"year": "2025",
+			"title": "Code execution with MCP: Building more efficient AI agents",
+			"url": "https://www.anthropic.com/engineering/code-execution-with-mcp"
+		},
+		{
+			"key": "cloudflare_code_mode_mcp_2026",
+			"n": 12,
+			"html": "<span class=\"ref-authors\">M. Carey</span>. <span class=\"ref-title\">Code mode: Give agents an entire API in 1,000 tokens</span>. <em>Cloudflare Blog</em>, 2026. <a class=\"ref-link\" href=\"https://blog.cloudflare.com/code-mode-mcp/\" target=\"_blank\" rel=\"noreferrer\">blog.cloudflare.com/code-mode-mcp/</a>",
+			"short": "Carey",
+			"year": "2026",
+			"title": "Code mode: Give agents an entire API in 1,000 tokens",
+			"url": "https://blog.cloudflare.com/code-mode-mcp/"
+		},
+		{
+			"key": "cloudflare_dynamic_workers_2026",
+			"n": 13,
+			"html": "<span class=\"ref-authors\">K. Varda, S. Pai, and K. Gupta</span>. <span class=\"ref-title\">Sandboxing AI agents, 100x faster</span>. <em>Cloudflare Blog</em>, 2026. <a class=\"ref-link\" href=\"https://blog.cloudflare.com/dynamic-workers/\" target=\"_blank\" rel=\"noreferrer\">blog.cloudflare.com/dynamic-workers/</a>",
+			"short": "Varda, Pai, and Gupta",
+			"year": "2026",
+			"title": "Sandboxing AI agents, 100x faster",
+			"url": "https://blog.cloudflare.com/dynamic-workers/"
+		},
+		{
+			"key": "wang_codeact_2024",
+			"n": 14,
+			"html": "<span class=\"ref-authors\">X. Wang, Y. Chen, L. Yuan, Y. Zhang, Y. Li, H. Peng, and H. Ji</span>. <span class=\"ref-title\">Executable code actions elicit better LLM agents</span>. <em>Proceedings of the 41st international conference on machine learning</em>, vol. 235, pp. 50208-50232, 2024. <a class=\"ref-link\" href=\"https://proceedings.mlr.press/v235/wang24h.html\" target=\"_blank\" rel=\"noreferrer\">proceedings.mlr.press/v235/wang24h.html</a>",
+			"short": "Wang et al.",
+			"year": "2024",
+			"title": "Executable code actions elicit better LLM agents",
+			"url": "https://proceedings.mlr.press/v235/wang24h.html"
+		},
+		{
+			"key": "pan2026_agent_first_tool_api",
+			"n": 15,
+			"html": "<span class=\"ref-authors\">K. Pan</span>. <span class=\"ref-title\">Agent-First Tool API: A Semantic Interface Paradigm for Enterprise AI Agent Systems</span>. <em>arXiv preprint arXiv:2605.10555</em>, 2026. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2605.10555\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2605.10555</a>",
+			"short": "Pan",
+			"year": "2026",
+			"title": "Agent-First Tool API: A Semantic Interface Paradigm for Enterprise AI Agent Systems",
+			"url": "https://arxiv.org/abs/2605.10555"
+		},
+		{
+			"key": "almazrouei2025_anka_dsl_llm",
+			"n": 16,
+			"html": "<span class=\"ref-authors\">S. K. S. A. Mazrouei</span>. <span class=\"ref-title\">Anka: A Domain-Specific Language for Reliable LLM Code Generation</span>. <em>arXiv preprint arXiv:2512.23214</em>, 2025. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2512.23214\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2512.23214</a>",
+			"short": "Mazrouei",
+			"year": "2025",
+			"title": "Anka: A Domain-Specific Language for Reliable LLM Code Generation",
+			"url": "https://arxiv.org/abs/2512.23214"
+		},
+		{
+			"key": "mariotti2024llmkg",
+			"n": 17,
+			"html": "<span class=\"ref-authors\">L. Mariotti and others</span>. <span class=\"ref-title\">Combining large language models with enterprise knowledge graphs: A perspective on enhanced natural language understanding</span>. <em>Frontiers in Artificial Intelligence</em>, vol. 7, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.3389/frai.2024.1460065\" target=\"_blank\" rel=\"noreferrer\">doi:10.3389/frai.2024.1460065</a>",
+			"short": "Mariotti and others",
+			"year": "2024",
+			"title": "Combining large language models with enterprise knowledge graphs: A perspective on enhanced natural language understanding",
+			"url": "https://doi.org/10.3389/frai.2024.1460065"
+		},
+		{
+			"key": "laurenzi2024ekgprocess",
+			"n": 18,
+			"html": "<span class=\"ref-authors\">E. Laurenzi, N. Mathys, and T. Martin</span>. <span class=\"ref-title\">An LLM-aided enterprise knowledge graph (EKG) engineering process</span>. <em>AAAI symposium series</em>, 2024. <a class=\"ref-link\" href=\"https://bibbase.org/network/publication/laurenzi-mathys-martin-anllmaidedenterpriseknowledgegraphekgengineeringprocess-2024\" target=\"_blank\" rel=\"noreferrer\">bibbase.org/network/publication/laurenzi-mathys-martin-anllmaidedenterpriseknowledgegraphekgengineeringprocess-2024</a>",
+			"short": "Laurenzi, Mathys, and Martin",
+			"year": "2024",
+			"title": "An LLM-aided enterprise knowledge graph (EKG) engineering process",
+			"url": "https://bibbase.org/network/publication/laurenzi-mathys-martin-anllmaidedenterpriseknowledgegraphekgengineeringprocess-2024"
+		},
+		{
+			"key": "xiu2026astra",
+			"n": 19,
+			"html": "<span class=\"ref-authors\">Z. Xiu, D. Sun, K. Cheng, M. Patel, J. Date, Y. Zhang, J. Lu, O. Attia, R. Vemulapalli, O. Tuzel, M. Cao, and S. Bengio</span>. <span class=\"ref-title\">ASTRA-bench: Evaluating Tool-Use Agent Reasoning and Action Planning with Personal User Context</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2603.01357\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2603.01357</a>",
+			"short": "Xiu et al.",
+			"year": "2026",
+			"title": "ASTRA-bench: Evaluating Tool-Use Agent Reasoning and Action Planning with Personal User Context",
+			"url": "https://doi.org/10.48550/arxiv.2603.01357"
+		},
+		{
+			"key": "pysklo2026agent",
+			"n": 20,
+			"html": "<span class=\"ref-authors\">H. M. Pysklo, A. Zhuravel, and P. D. Watson</span>. <span class=\"ref-title\">Agent-Diff: Benchmarking LLM Agents on Enterprise API Tasks via Code Execution with State-Diff-Based Evaluation</span>. <em>Open MIND</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2602.11224\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2602.11224</a>",
+			"short": "Pysklo, Zhuravel, and Watson",
+			"year": "2026",
+			"title": "Agent-Diff: Benchmarking LLM Agents on Enterprise API Tasks via Code Execution with State-Diff-Based Evaluation",
+			"url": "https://doi.org/10.48550/arxiv.2602.11224"
+		},
+		{
+			"key": "gupta2026reliabilitybench",
+			"n": 21,
+			"html": "<span class=\"ref-authors\">A. Gupta</span>. <span class=\"ref-title\">ReliabilityBench: Evaluating LLM Agent Reliability Under Production-Like Stress Conditions</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2601.06112\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2601.06112</a>",
+			"short": "Gupta",
+			"year": "2026",
+			"title": "ReliabilityBench: Evaluating LLM Agent Reliability Under Production-Like Stress Conditions",
+			"url": "https://doi.org/10.48550/arxiv.2601.06112"
+		},
+		{
+			"key": "wei2026architectural",
+			"n": 22,
+			"html": "<span class=\"ref-authors\">H. Wei</span>. <span class=\"ref-title\">Architectural Design Decisions in AI Agent Harnesses</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.18071\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.18071</a>",
+			"short": "Wei",
+			"year": "2026",
+			"title": "Architectural Design Decisions in AI Agent Harnesses",
+			"url": "https://doi.org/10.48550/arxiv.2604.18071"
+		},
+		{
+			"key": "yao2024taubench",
+			"n": 23,
+			"html": "<span class=\"ref-authors\">S. Yao and others</span>. <span class=\"ref-title\">A benchmark for tool-agent-user interaction in real-world domains</span>. <em>CoRR</em>, vol. abs/2406.12045, 2024. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2406.12045\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2406.12045</a>",
+			"short": "Yao and others",
+			"year": "2024",
+			"title": "A benchmark for tool-agent-user interaction in real-world domains",
+			"url": "https://arxiv.org/abs/2406.12045"
+		},
+		{
+			"key": "vaswani2017attention",
+			"n": 24,
+			"html": "<span class=\"ref-authors\">A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin</span>. <span class=\"ref-title\">Attention is all you need</span>. <em>Advances in neural information processing systems</em>, vol. 30, 2017.",
+			"short": "Vaswani et al.",
+			"year": "2017",
+			"title": "Attention is all you need",
+			"url": null
+		},
+		{
+			"key": "brown2020language",
+			"n": 25,
+			"html": "<span class=\"ref-authors\">T. Brown, B. Mann, N. Ryder, M. Subbiah, J. D. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, and others</span>. <span class=\"ref-title\">Language models are few-shot learners</span>. <em>Advances in neural information processing systems</em>, vol. 33, pp. 1877-1901, 2020.",
+			"short": "Brown et al.",
+			"year": "2020",
+			"title": "Language models are few-shot learners",
+			"url": null
+		},
+		{
+			"key": "li2024review",
+			"n": 26,
+			"html": "<span class=\"ref-authors\">X. Li</span>. <span class=\"ref-title\">A Review of Prominent Paradigms for LLM-Based Agents: Tool Use (Including RAG), Planning, and Feedback Learning</span>. <em>arXiv (Cornell University)</em>, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2406.05804\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2406.05804</a>",
+			"short": "Li",
+			"year": "2024",
+			"title": "A Review of Prominent Paradigms for LLM-Based Agents: Tool Use (Including RAG), Planning, and Feedback Learning",
+			"url": "https://doi.org/10.48550/arxiv.2406.05804"
+		},
+		{
+			"key": "openaidevelopers",
+			"n": 27,
+			"html": "<span class=\"ref-authors\">OpenAI</span>. <span class=\"ref-title\">Function calling and other API tools</span>. <em>OpenAI Developers</em>, 2026. <a class=\"ref-link\" href=\"https://developers.openai.com/api/docs/guides/function-calling\" target=\"_blank\" rel=\"noreferrer\">developers.openai.com/api/docs/guides/function-calling</a>",
+			"short": "OpenAI",
+			"year": "2026",
+			"title": "Function calling and other API tools",
+			"url": "https://developers.openai.com/api/docs/guides/function-calling"
+		},
+		{
+			"key": "toolformer",
+			"n": 28,
+			"html": "<span class=\"ref-authors\">T. Schick, J. Dwivedi-Yu, R. Dessı̀, R. Raileanu, M. Lomeli, L. Zettlemoyer, N. Cancedda, and T. Scialom</span>. <span class=\"ref-title\">Toolformer: Language models can teach themselves to use tools</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2302.04761\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2302.04761</a>",
+			"short": "Schick et al.",
+			"year": "2023",
+			"title": "Toolformer: Language models can teach themselves to use tools",
+			"url": "https://doi.org/10.48550/arxiv.2302.04761"
+		},
+		{
+			"key": "russell_norvig_2016",
+			"n": 29,
+			"html": "<span class=\"ref-authors\">S. Russell and P. Norvig</span>. <cite class=\"ref-title\">Artificial Intelligence: A Modern Approach</cite>. <em>Pearson</em>, 2016.",
+			"short": "Russell and Norvig",
+			"year": "2016",
+			"title": "Artificial Intelligence: A Modern Approach",
+			"url": null
+		},
+		{
+			"key": "stryker2026aiagents",
+			"n": 30,
+			"html": "<span class=\"ref-authors\">C. Stryker</span>. <span class=\"ref-title\">Types of AI agents</span>. <em>IBM</em>, 2026. <a class=\"ref-link\" href=\"https://www.ibm.com/think/topics/ai-agent-types\" target=\"_blank\" rel=\"noreferrer\">www.ibm.com/think/topics/ai-agent-types</a>",
+			"short": "Stryker",
+			"year": "2026",
+			"title": "Types of AI agents",
+			"url": "https://www.ibm.com/think/topics/ai-agent-types"
+		},
+		{
+			"key": "react",
+			"n": 31,
+			"html": "<span class=\"ref-authors\">S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao</span>. <span class=\"ref-title\">ReAct: Synergizing reasoning and acting in language models</span>. <em>arXiv (Cornell University)</em>, 2022. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2210.03629\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2210.03629</a>",
+			"short": "Yao et al.",
+			"year": "2022",
+			"title": "ReAct: Synergizing reasoning and acting in language models",
+			"url": "https://doi.org/10.48550/arxiv.2210.03629"
+		},
+		{
+			"key": "reflexion",
+			"n": 32,
+			"html": "<span class=\"ref-authors\">N. Shinn, F. Cassano, A. Gopinath, K. Narasimhan, and S. Yao</span>. <span class=\"ref-title\">Reflexion: Language agents with verbal reinforcement learning</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2303.11366\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2303.11366</a>",
+			"short": "Shinn et al.",
+			"year": "2023",
+			"title": "Reflexion: Language agents with verbal reinforcement learning",
+			"url": "https://doi.org/10.48550/arxiv.2303.11366"
+		},
+		{
+			"key": "deng2023swebench",
+			"n": 33,
+			"html": "<span class=\"ref-authors\">X. Deng and others</span>. <span class=\"ref-title\">SWE-bench: Can language models resolve real-world GitHub issues?</span>. <em>CoRR</em>, vol. abs/2310.06770, 2023. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2310.06770\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2310.06770</a>",
+			"short": "Deng and others",
+			"year": "2023",
+			"title": "SWE-bench: Can language models resolve real-world GitHub issues?",
+			"url": "https://arxiv.org/abs/2310.06770"
+		},
+		{
+			"key": "webarena",
+			"n": 34,
+			"html": "<span class=\"ref-authors\">S. Zhou, F. F. Xu, H. Zhu, X. Zhou, R. Lo, A. Sridhar, X. Cheng, T. Ou, Y. Bisk, D. Fried, U. Alon, and G. Neubig</span>. <span class=\"ref-title\">WebArena: A realistic web environment for building autonomous agents</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2307.13854\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2307.13854</a>",
+			"short": "Zhou et al.",
+			"year": "2023",
+			"title": "WebArena: A realistic web environment for building autonomous agents",
+			"url": "https://doi.org/10.48550/arxiv.2307.13854"
+		},
+		{
+			"key": "gorilla",
+			"n": 35,
+			"html": "<span class=\"ref-authors\">S. G. Patil, T. Zhang, X. Wang, and J. E. Gonzalez</span>. <span class=\"ref-title\">Gorilla: Large language model connected with massive APIs</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2305.15334\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2305.15334</a>",
+			"short": "Patil et al.",
+			"year": "2023",
+			"title": "Gorilla: Large language model connected with massive APIs",
+			"url": "https://doi.org/10.48550/arxiv.2305.15334"
+		},
+		{
+			"key": "togaf2022standard",
+			"n": 36,
+			"html": "<span class=\"ref-authors\">The Open Group</span>. <span class=\"ref-title\">The TOGAF Standard, 10th Edition</span>. <em>The Open Group</em>, 2022. <a class=\"ref-link\" href=\"https://publications.opengroup.org/c220\" target=\"_blank\" rel=\"noreferrer\">publications.opengroup.org/c220</a>",
+			"short": "The Open Group",
+			"year": "2022",
+			"title": "The TOGAF Standard, 10th Edition",
+			"url": "https://publications.opengroup.org/c220"
+		},
+		{
+			"key": "ardoq2025graphdb",
+			"n": 37,
+			"html": "<span class=\"ref-authors\">Ardoq</span>. <span class=\"ref-title\">Graph databases and enterprise architecture: A first-principles guide</span>. <em>https://www.ardoq.com/knowledge-hub/graph-databases-ea</em>, 2025.",
+			"short": "Ardoq",
+			"year": "2025",
+			"title": "Graph databases and enterprise architecture: A first-principles guide",
+			"url": null
+		},
+		{
+			"key": "ardoq2026platformoverview",
+			"n": 38,
+			"html": "<span class=\"ref-authors\">Ardoq</span>. <span class=\"ref-title\">Enterprise architecture platform overview</span>. <em>https://www.ardoq.com/platform-overview</em>, 2026.",
+			"short": "Ardoq",
+			"year": "2026",
+			"title": "Enterprise architecture platform overview",
+			"url": null
+		},
+		{
+			"key": "ardoq2025solutionguides",
+			"n": 39,
+			"html": "<span class=\"ref-authors\">Ardoq</span>. <span class=\"ref-title\">What are ardoq’s solution guides, and who can use them?</span>. <em>https://help.ardoq.com/en/articles/43948-what-are-ardoq-s-solution-guides-and-who-can-use-them</em>, 2025.",
+			"short": "Ardoq",
+			"year": "2025",
+			"title": "What are ardoq’s solution guides, and who can use them?",
+			"url": null
+		},
+		{
+			"key": "ardoq2026appratgettingstarted",
+			"n": 40,
+			"html": "<span class=\"ref-authors\">Ardoq</span>. <span class=\"ref-title\">Getting started with application rationalization</span>. <em>https://help.ardoq.com/en/articles/44015-getting-started-with-application-rationalization</em>, 2026.",
+			"short": "Ardoq",
+			"year": "2026",
+			"title": "Getting started with application rationalization",
+			"url": null
+		},
+		{
+			"key": "rolim2025metadata",
+			"n": 41,
+			"html": "<span class=\"ref-authors\">T. V. Rolim, J. R. S. Freitas, and V. M. P. Vidal</span>. <span class=\"ref-title\">Metadata-Driven Construction of Semantic Views in Enterprise Knowledge Graphs with LLM Agents</span>. <em>Anais estendidos do XL simpósio brasileiro de banco de dados (SBBD 2025)</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.5753/sbbd_estendido.2025.248167\" target=\"_blank\" rel=\"noreferrer\">doi:10.5753/sbbd_estendido.2025.248167</a>",
+			"short": "Rolim, Freitas, and Vidal",
+			"year": "2025",
+			"title": "Metadata-Driven Construction of Semantic Views in Enterprise Knowledge Graphs with LLM Agents",
+			"url": "https://doi.org/10.5753/sbbd_estendido.2025.248167"
+		},
+		{
+			"key": "mcp2025specification",
+			"n": 42,
+			"html": "<span class=\"ref-authors\">Model Context Protocol</span>. <span class=\"ref-title\">Specification: Architecture and base protocol</span>. <em>Protocol revision 2025-03-26</em>, 2025. <a class=\"ref-link\" href=\"https://modelcontextprotocol.io/specification/2025-03-26/basic/index\" target=\"_blank\" rel=\"noreferrer\">modelcontextprotocol.io/specification/2025-03-26/basic/index</a>",
+			"short": "Model Context Protocol",
+			"year": "2025",
+			"title": "Specification: Architecture and base protocol",
+			"url": "https://modelcontextprotocol.io/specification/2025-03-26/basic/index"
+		},
+		{
+			"key": "ardoq2026mcp",
+			"n": 43,
+			"html": "<span class=\"ref-authors\">Ardoq</span>. <span class=\"ref-title\">Using the Ardoq MCP Server</span>. <em>Ardoq Help Center</em>, 2026. <a class=\"ref-link\" href=\"https://help.ardoq.com/en/articles/415375-using-the-ardoq-mcp-server\" target=\"_blank\" rel=\"noreferrer\">help.ardoq.com/en/articles/415375-using-the-ardoq-mcp-server</a>",
+			"short": "Ardoq",
+			"year": "2026",
+			"title": "Using the Ardoq MCP Server",
+			"url": "https://help.ardoq.com/en/articles/415375-using-the-ardoq-mcp-server"
+		},
+		{
+			"key": "liu2024lost",
+			"n": 44,
+			"html": "<span class=\"ref-authors\">N. F. Liu, K. Lin, J. Hewitt, A. Paranjape, M. Bevilacqua, F. Petroni, and P. Liang</span>. <span class=\"ref-title\">Lost in the middle: How language models use long contexts</span>. <em>Transactions of the Association for Computational Linguistics</em>, vol. 12, pp. 157-173, 2024.",
+			"short": "Liu et al.",
+			"year": "2024",
+			"title": "Lost in the middle: How language models use long contexts",
+			"url": null
+		},
+		{
+			"key": "lu2024toolsandbox",
+			"n": 45,
+			"html": "<span class=\"ref-authors\">J. Lu, T. Holleis, Y. Zhang, B. Aumayer, N. Feng, F. Bai, S. Ma, S. Ma, M. Li, G. Yin, Z. Wang, and R. Pang</span>. <span class=\"ref-title\">ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities</span>. <em>arXiv (Cornell University)</em>, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2408.04682\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2408.04682</a>",
+			"short": "Lu et al.",
+			"year": "2024",
+			"title": "ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities",
+			"url": "https://doi.org/10.48550/arxiv.2408.04682"
+		},
+		{
+			"key": "code-as-policies",
+			"n": 46,
+			"html": "<span class=\"ref-authors\">J. Liang, W. Huang, F. Xia, P. Xu, K. Hausman, B. Ichter, P. Florence, and A. Zeng</span>. <span class=\"ref-title\">Code as policies: Language model programs for embodied control</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2209.07753\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2209.07753</a>",
+			"short": "Liang et al.",
+			"year": "2023",
+			"title": "Code as policies: Language model programs for embodied control",
+			"url": "https://doi.org/10.48550/arxiv.2209.07753"
+		},
+		{
+			"key": "pal",
+			"n": 47,
+			"html": "<span class=\"ref-authors\">L. Gao, A. Madaan, S. Zhou, U. Alon, P. Liu, Y. Yang, J. Callan, and G. Neubig</span>. <span class=\"ref-title\">PAL: Program-aided language models</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2211.10435\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2211.10435</a>",
+			"short": "Gao et al.",
+			"year": "2023",
+			"title": "PAL: Program-aided language models",
+			"url": "https://doi.org/10.48550/arxiv.2211.10435"
+		},
+		{
+			"key": "huang2022zeroshotplanners",
+			"n": 48,
+			"html": "<span class=\"ref-authors\">W. Huang and others</span>. <span class=\"ref-title\">Language models as zero-shot planners: Extracting actionable knowledge for embodied agents</span>. <em>International conference on learning representations (ICLR)</em>, 2022. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2201.07207\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2201.07207</a>",
+			"short": "Huang and others",
+			"year": "2022",
+			"title": "Language models as zero-shot planners: Extracting actionable knowledge for embodied agents",
+			"url": "https://arxiv.org/abs/2201.07207"
+		},
+		{
+			"key": "wang2023mint",
+			"n": 49,
+			"html": "<span class=\"ref-authors\">X. Wang, Y. Wang, and others</span>. <span class=\"ref-title\">MINT: Evaluating LLMs in multi-turn interaction with tools and language feedback</span>. <em>CoRR</em>, vol. abs/2309.10691, 2023. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2309.10691\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2309.10691</a>",
+			"short": "Wang, Wang, and others",
+			"year": "2023",
+			"title": "MINT: Evaluating LLMs in multi-turn interaction with tools and language feedback",
+			"url": "https://arxiv.org/abs/2309.10691"
+		},
+		{
+			"key": "trooskens2026compiled",
+			"n": 50,
+			"html": "<span class=\"ref-authors\">G. Trooskens, A. Karlsberg, A. Sharma, L. D. Brouwer, M. V. Puyvelde, M. Young, J. Thickstun, G. Alterovitz, and W. D. Brouwer</span>. <span class=\"ref-title\">Compiled AI: Deterministic Code Generation for LLM-Based Workflow Automation</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.05150\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.05150</a>",
+			"short": "Trooskens et al.",
+			"year": "2026",
+			"title": "Compiled AI: Deterministic Code Generation for LLM-Based Workflow Automation",
+			"url": "https://doi.org/10.48550/arxiv.2604.05150"
+		},
+		{
+			"key": "felendler2026from",
+			"n": 51,
+			"html": "<span class=\"ref-authors\">Y. Felendler, P. A. Gandhi, I. Habler, Y. Elovici, and A. Shabtai</span>. <span class=\"ref-title\">From Tool Orchestration to Code Execution: A Study of MCP Design Choices</span>. <em>Open MIND</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2602.15945\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2602.15945</a>",
+			"short": "Felendler et al.",
+			"year": "2026",
+			"title": "From Tool Orchestration to Code Execution: A Study of MCP Design Choices",
+			"url": "https://doi.org/10.48550/arxiv.2602.15945"
+		},
+		{
+			"key": "verma2024brittle",
+			"n": 52,
+			"html": "<span class=\"ref-authors\">M. Verma and S. Kambhampati</span>. <span class=\"ref-title\">On the brittle foundations of ReAct prompting for agentic large language models</span>. <em>arXiv (Cornell University)</em>, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2405.13966\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2405.13966</a>",
+			"short": "Verma and Kambhampati",
+			"year": "2024",
+			"title": "On the brittle foundations of ReAct prompting for agentic large language models",
+			"url": "https://doi.org/10.48550/arxiv.2405.13966"
+		},
+		{
+			"key": "huang2024understanding",
+			"n": 53,
+			"html": "<span class=\"ref-authors\">X. Huang, W. Liu, X. Chen, X. Wang, H. Wang, D. Lian, Y. Wang, R. Tang, and E. Chen</span>. <span class=\"ref-title\">Understanding the planning of LLM agents: A survey</span>. <em>arXiv (Cornell University)</em>, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2402.02716\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2402.02716</a>",
+			"short": "Huang et al.",
+			"year": "2024",
+			"title": "Understanding the planning of LLM agents: A survey",
+			"url": "https://doi.org/10.48550/arxiv.2402.02716"
+		},
+		{
+			"key": "zhang2024memorysurvey",
+			"n": 54,
+			"html": "<span class=\"ref-authors\">Z. Zhang, X. Bo, C. Ma, R. Li, X. Chen, Q. Dai, J. Zhu, Z. Dong, and J.-R. Wen</span>. <span class=\"ref-title\">A survey on the memory mechanism of large language model based agents</span>. <em>arXiv (Cornell University)</em>, 2024. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2404.13501\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2404.13501</a>",
+			"short": "Zhang et al.",
+			"year": "2024",
+			"title": "A survey on the memory mechanism of large language model based agents",
+			"url": "https://doi.org/10.48550/arxiv.2404.13501"
+		},
+		{
+			"key": "jiang2025naviagent",
+			"n": 55,
+			"html": "<span class=\"ref-authors\">Y. Jiang, H. Zhou, L. Gu, A. L. Han, and T. Li</span>. <span class=\"ref-title\">NaviAgent: Bilevel Planning on Tool Navigation Graph for Large-Scale Orchestration</span>. <em>ArXiv.org</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2506.19500\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2506.19500</a>",
+			"short": "Jiang et al.",
+			"year": "2025",
+			"title": "NaviAgent: Bilevel Planning on Tool Navigation Graph for Large-Scale Orchestration",
+			"url": "https://doi.org/10.48550/arxiv.2506.19500"
+		},
+		{
+			"key": "jiang2026_sok_agentic_skills",
+			"n": 56,
+			"html": "<span class=\"ref-authors\">Y. Jiang, D. Li, H. Deng, B. Ma, X. Wang, Q. Wang, and G. Yu</span>. <span class=\"ref-title\">SoK: Agentic Skills – Beyond Tool Use in LLM Agents</span>. <em>arXiv preprint arXiv:2602.20867</em>, 2026. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2602.20867\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2602.20867</a>",
+			"short": "Jiang et al.",
+			"year": "2026",
+			"title": "SoK: Agentic Skills – Beyond Tool Use in LLM Agents",
+			"url": "https://arxiv.org/abs/2602.20867"
+		},
+		{
+			"key": "chen2026_skillcraft",
+			"n": 57,
+			"html": "<span class=\"ref-authors\">S. Chen, J. Gai, R. Zhou, J. Zhang, T. Zhu, J. Li, K. Wang, Z. Wang, Z. Chen, K. Kaleb, N. Miao, S. Gao, C. Lu, M. Li, J. He, and Y. W. Teh</span>. <span class=\"ref-title\">SkillCraft: Can LLM Agents Learn to Use Tools Skillfully?</span>. <em>arXiv preprint arXiv:2603.00718</em>, 2026. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2603.00718\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2603.00718</a>",
+			"short": "Chen et al.",
+			"year": "2026",
+			"title": "SkillCraft: Can LLM Agents Learn to Use Tools Skillfully?",
+			"url": "https://arxiv.org/abs/2603.00718"
+		},
+		{
+			"key": "qian2023_creator_tool_creation",
+			"n": 58,
+			"html": "<span class=\"ref-authors\">C. Qian, C. Han, Y. R. Fung, Y. Qin, Z. Liu, and H. Ji</span>. <span class=\"ref-title\">CREATOR: Tool Creation for Disentangling Abstract and Concrete Reasoning of Large Language Models</span>. <em>Findings of the association for computational linguistics: EMNLP 2023</em>, 2023. <a class=\"ref-link\" href=\"https://aclanthology.org/2023.findings-emnlp.462/\" target=\"_blank\" rel=\"noreferrer\">aclanthology.org/2023.findings-emnlp.462/</a>",
+			"short": "Qian et al.",
+			"year": "2023",
+			"title": "CREATOR: Tool Creation for Disentangling Abstract and Concrete Reasoning of Large Language Models",
+			"url": "https://aclanthology.org/2023.findings-emnlp.462/"
+		},
+		{
+			"key": "yuan2024_craft_toolsets",
+			"n": 59,
+			"html": "<span class=\"ref-authors\">L. Yuan, Y. Chen, X. Wang, Y. R. Fung, H. Peng, and H. Ji</span>. <span class=\"ref-title\">CRAFT: Customizing LLMs by Creating and Retrieving from Specialized Toolsets</span>. <em>Proceedings of the international conference on learning representations (ICLR)</em>, 2024. <a class=\"ref-link\" href=\"https://arxiv.org/abs/2309.17428\" target=\"_blank\" rel=\"noreferrer\">arxiv.org/abs/2309.17428</a>",
+			"short": "Yuan et al.",
+			"year": "2024",
+			"title": "CRAFT: Customizing LLMs by Creating and Retrieving from Specialized Toolsets",
+			"url": "https://arxiv.org/abs/2309.17428"
+		},
+		{
+			"key": "pagels2026large",
+			"n": 60,
+			"html": "<span class=\"ref-authors\">C. Pagels, S. Hacks, and R. Bemthuis</span>. <span class=\"ref-title\">Large Language Models for Analyzing Enterprise Architecture Debt in Unstructured Documentation</span>. <em>University of Twente Research Information</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.00046\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.00046</a>",
+			"short": "Pagels, Hacks, and Bemthuis",
+			"year": "2026",
+			"title": "Large Language Models for Analyzing Enterprise Architecture Debt in Unstructured Documentation",
+			"url": "https://doi.org/10.48550/arxiv.2604.00046"
+		},
+		{
+			"key": "acharya2026governing",
+			"n": 61,
+			"html": "<span class=\"ref-authors\">V. Acharya</span>. <span class=\"ref-title\">Governing the Agentic Enterprise: A Governance Maturity Model for Managing AI Agent Sprawl in Business Operations</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.16338\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.16338</a>",
+			"short": "Acharya",
+			"year": "2026",
+			"title": "Governing the Agentic Enterprise: A Governance Maturity Model for Managing AI Agent Sprawl in Business Operations",
+			"url": "https://doi.org/10.48550/arxiv.2604.16338"
+		},
+		{
+			"key": "leanix2024aicapabilities",
+			"n": 62,
+			"html": "<span class=\"ref-authors\">SAP LeanIX</span>. <span class=\"ref-title\">AI capabilities</span>. <em>https://help.sap.com/docs/leanix/ea/ai-capabilities</em>, 2024.",
+			"short": "SAP LeanIX",
+			"year": "2024",
+			"title": "AI capabilities",
+			"url": null
+		},
+		{
+			"key": "guancheng2025routine",
+			"n": 63,
+			"html": "<span class=\"ref-authors\">G. Zeng, X. Chen, J. F. Hu, S. Qi, Y. Mao, Z. Wang, Y. Nie, S. Li, Q. Feng, P. Qiu, Y. Wang, W. Y. Han, L. Huang, G. Li, J. P. T. Mo, and H. Hu</span>. <span class=\"ref-title\">Routine: A Structural Planning Framework for LLM Agent System in Enterprise</span>. <em>ArXiv.org</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2507.14447\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2507.14447</a>",
+			"short": "Zeng et al.",
+			"year": "2025",
+			"title": "Routine: A Structural Planning Framework for LLM Agent System in Enterprise",
+			"url": "https://doi.org/10.48550/arxiv.2507.14447"
+		},
+		{
+			"key": "liu2026skillforge",
+			"n": 64,
+			"html": "<span class=\"ref-authors\">X. Liu, X. Luo, L. Li, G. Huang, J. Liu, and H. Qiao</span>. <span class=\"ref-title\">SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.08618\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.08618</a>",
+			"short": "Liu et al.",
+			"year": "2026",
+			"title": "SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support",
+			"url": "https://doi.org/10.48550/arxiv.2604.08618"
+		},
+		{
+			"key": "dunkel2026dadl",
+			"n": 65,
+			"html": "<span class=\"ref-authors\">A. Dunkel</span>. <span class=\"ref-title\">DADL: A Declarative Description Language for Enterprise Tool Libraries in LLM Agent Systems</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2605.05247\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2605.05247</a>",
+			"short": "Dunkel",
+			"year": "2026",
+			"title": "DADL: A Declarative Description Language for Enterprise Tool Libraries in LLM Agent Systems",
+			"url": "https://doi.org/10.48550/arxiv.2605.05247"
+		},
+		{
+			"key": "petr2025are",
+			"n": 66,
+			"html": "<span class=\"ref-authors\">P. Průcha, M. Matoušková, and J. Strnad</span>. <span class=\"ref-title\">Are LLM Agents the New RPA? A Comparative Study with RPA Across Enterprise Workflows</span>. <em>arXiv (Cornell University)</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2509.04198\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2509.04198</a>",
+			"short": "Průcha, Matoušková, and Strnad",
+			"year": "2025",
+			"title": "Are LLM Agents the New RPA? A Comparative Study with RPA Across Enterprise Workflows",
+			"url": "https://doi.org/10.48550/arxiv.2509.04198"
+		},
+		{
+			"key": "moslemi2026polaris",
+			"n": 67,
+			"html": "<span class=\"ref-authors\">Z. Moslemi, K. Koneru, Y.-T. Lee, S. Kumar, and R. Radhakrishnan</span>. <span class=\"ref-title\">POLARIS: Typed Planning and Governed Execution for Agentic AI in Back-Office Automation</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2601.11816\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2601.11816</a>",
+			"short": "Moslemi et al.",
+			"year": "2026",
+			"title": "POLARIS: Typed Planning and Governed Execution for Agentic AI in Back-Office Automation",
+			"url": "https://doi.org/10.48550/arxiv.2601.11816"
+		},
+		{
+			"key": "mastouri2025from",
+			"n": 68,
+			"html": "<span class=\"ref-authors\">M. Mastouri, E. Ksontini, A. Barrak, and W. Kessentini</span>. <span class=\"ref-title\">From REST to MCP: An Empirical Study of API Wrapping and Automated Server Generation for LLM Agents</span>. <em>ArXiv.org</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2507.16044\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2507.16044</a>",
+			"short": "Mastouri et al.",
+			"year": "2025",
+			"title": "From REST to MCP: An Empirical Study of API Wrapping and Automated Server Generation for LLM Agents",
+			"url": "https://doi.org/10.48550/arxiv.2507.16044"
+		},
+		{
+			"key": "taraghih2026mcpfaults",
+			"n": 69,
+			"html": "<span class=\"ref-authors\">M. Taraghi, M. M. Morovati, and F. Khomh</span>. <span class=\"ref-title\">Real Faults in Model Context Protocol (MCP) Software: A Comprehensive Taxonomy</span>. <em>J. ACM</em>, vol. 37, pp. 111:1-111:40, 2026. <a class=\"ref-link\" href=\"https://openalex.org/W7134291035\" target=\"_blank\" rel=\"noreferrer\">openalex.org/W7134291035</a>",
+			"short": "Taraghi, Morovati, and Khomh",
+			"year": "2026",
+			"title": "Real Faults in Model Context Protocol (MCP) Software: A Comprehensive Taxonomy",
+			"url": "https://openalex.org/W7134291035"
+		},
+		{
+			"key": "apibank",
+			"n": 70,
+			"html": "<span class=\"ref-authors\">M. Li, Y. Song, S. Yang, Y. Wang, Z. Chen, and J. Gao</span>. <span class=\"ref-title\">API-Bank: A comprehensive benchmark for tool-augmented LLMs</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2304.08244\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2304.08244</a>",
+			"short": "Li et al.",
+			"year": "2023",
+			"title": "API-Bank: A comprehensive benchmark for tool-augmented LLMs",
+			"url": "https://doi.org/10.48550/arxiv.2304.08244"
+		},
+		{
+			"key": "agentbench",
+			"n": 71,
+			"html": "<span class=\"ref-authors\">X. Liu, H. Yu, H. Zhang, Y. Xu, X. Lei, H. Lai, Y. Gu, H. Ding, K. Men, K. Yang, S. Zhang, X. Deng, A. Zeng, Z. Du, C. Zhang, S. Shen, T. Zhang, Y. Su, H. Sun, M. Huang, Y. Dong, and J. Tang</span>. <span class=\"ref-title\">AgentBench: A comprehensive benchmark to evaluate LLMs as agents</span>. <em>arXiv (Cornell University)</em>, 2023. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2308.03688\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2308.03688</a>",
+			"short": "Liu et al.",
+			"year": "2023",
+			"title": "AgentBench: A comprehensive benchmark to evaluate LLMs as agents",
+			"url": "https://doi.org/10.48550/arxiv.2308.03688"
+		},
+		{
+			"key": "jang2026dicebench",
+			"n": 72,
+			"html": "<span class=\"ref-authors\">K. Jang, D. Lee, K. Kim, D. Heo, T. Lee, W. Kim, and B. Suh</span>. <span class=\"ref-title\">DICE-BENCH: Evaluating the Tool-Use Capabilities of Large Language Models in Multi-Round, Multi-Party Dialogues</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2506.22853\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2506.22853</a>",
+			"short": "Jang et al.",
+			"year": "2026",
+			"title": "DICE-BENCH: Evaluating the Tool-Use Capabilities of Large Language Models in Multi-Round, Multi-Party Dialogues",
+			"url": "https://doi.org/10.48550/arxiv.2506.22853"
+		},
+		{
+			"key": "he2025traject",
+			"n": 73,
+			"html": "<span class=\"ref-authors\">P. He, Z. Dai, B. He, H. Liu, X. Tang, H. Lu, J. Li, J. Ding, S. Mukherjee, S. Wang, X. Yue, J. Tang, and B. Dumoulin</span>. <span class=\"ref-title\">TRAJECT-Bench:A Trajectory-Aware Benchmark for Evaluating Agentic Tool Use</span>. <em>ArXiv.org</em>, 2025. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2510.04550\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2510.04550</a>",
+			"short": "He et al.",
+			"year": "2025",
+			"title": "TRAJECT-Bench:A Trajectory-Aware Benchmark for Evaluating Agentic Tool Use",
+			"url": "https://doi.org/10.48550/arxiv.2510.04550"
+		},
+		{
+			"key": "jha2026reap",
+			"n": 74,
+			"html": "<span class=\"ref-authors\">S. Jha, M. Paltenghi, C. Maddila, V. Murali, S. Ugare, and S. Chandra</span>. <span class=\"ref-title\">REAP: Automatic curation of coding agent benchmarks from interactive production usage</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2604.01527\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2604.01527</a>",
+			"short": "Jha et al.",
+			"year": "2026",
+			"title": "REAP: Automatic curation of coding agent benchmarks from interactive production usage",
+			"url": "https://doi.org/10.48550/arxiv.2604.01527"
+		},
+		{
+			"key": "cao2026beyond",
+			"n": 75,
+			"html": "<span class=\"ref-authors\">H. Cao, I. Driouich, and E. Thomas</span>. <span class=\"ref-title\">Beyond Task Completion: Revealing Corrupt Success in LLM Agents through Procedure-Aware Evaluation</span>. <em>arXiv (Cornell University)</em>, 2026. <a class=\"ref-link\" href=\"https://doi.org/10.48550/arxiv.2603.03116\" target=\"_blank\" rel=\"noreferrer\">doi:10.48550/arxiv.2603.03116</a>",
+			"short": "Cao, Driouich, and Thomas",
+			"year": "2026",
+			"title": "Beyond Task Completion: Revealing Corrupt Success in LLM Agents through Procedure-Aware Evaluation",
+			"url": "https://doi.org/10.48550/arxiv.2603.03116"
+		}
+	]
+}
